@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giáo trình Tư tưởng Hồ Chí Minh — 3 Chương đầu</title>
+<meta name="description" content="Trang học tập tổng hợp 3 chương đầu Giáo trình Tư tưởng Hồ Chí Minh (Bộ GD&ĐT, 2019).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b12;
+    --paper:#fbf8f1;
+    --paper-2:#f3ede0;
+    --ink:#22201c;
+    --ink-soft:#514c42;
+    --red:#8a1c2a;
+    --red-deep:#5e1220;
+    --gold:#c9a24b;
+    --gold-soft:#e7cf94;
+    --line: rgba(34,32,28,.12);
+    --maxw: 880px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Be Vietnam Pro', system-ui, sans-serif;
+    line-height:1.75;
+  }
+  h1,h2,h3,h4,.serif{font-family:'Playfair Display', Georgia, serif;}
+
+  /* ---------- HERO / THREE.JS ---------- */
+  .hero{
+    position:relative;
+    min-height:720px;
+    overflow:hidden;
+    background: radial-gradient(ellipse at 50% 20%, #1a1420 0%, #0b0b12 60%, #06060a 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#f6efe0;
+    padding:32px 22px 40px;
+  }
+  #bg-canvas{
+    position:absolute; inset:0; width:100%; height:100%; display:block;
+    opacity:0; transition:opacity 1.6s ease;
+  }
+  .hero-content{
+    position:relative; z-index:2; width:min(100%, 760px);
+    display:flex; flex-direction:column; align-items:center;
+    padding:14px 22px 22px;
+    text-shadow:0 2px 18px rgba(0,0,0,.72);
+  }
+  .kicker{
+    letter-spacing:.32em; text-transform:uppercase; font-size:12px;
+    color:var(--gold-soft); margin:0 0 13px; opacity:.9;
+  }
+  .hero h1{
+    font-size:clamp(34px, 4.4vw, 62px);
+    margin:0 0 16px;
+    font-weight:800;
+    background:linear-gradient(180deg,#fff6df 0%, var(--gold-soft) 55%, var(--gold) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 0 60px rgba(201,162,75,.25);
+    line-height:1.15;
+  }
+  .hero p.lead{
+    font-size:clamp(14px,2vw,17px);
+    color:#f1e7d2; opacity:.92; max-width:620px; margin:0 auto 24px;
+    font-weight:300;
+  }
+  .hero-meta{
+    display:flex; gap:9px; flex-wrap:wrap; justify-content:center; margin:0;
+  }
+  .pill{
+    border:1px solid rgba(231,207,148,.35); color:var(--gold-soft);
+    padding:7px 16px; border-radius:99px; font-size:12.5px; letter-spacing:.02em;
+    background:rgba(11,11,18,.5); box-shadow:0 6px 20px rgba(0,0,0,.22);
+  }
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    z-index:2; color:var(--gold-soft); opacity:.7; font-size:12px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    letter-spacing:.2em; text-transform:uppercase;
+  }
+  .scroll-cue .dot{width:1px; height:34px; background:linear-gradient(var(--gold-soft), transparent); animation:drop 1.8s ease-in-out infinite;}
+  @keyframes drop{0%{opacity:0; transform:translateY(-6px)}50%{opacity:1}100%{opacity:0; transform:translateY(10px)}}
+
+  /* ---------- NAV ---------- */
+  .tabs-wrap{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,248,241,.9); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .tabs{
+    max-width:var(--maxw); margin:0 auto; display:flex; gap:4px;
+    padding:10px 20px; overflow-x:auto; scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tabs a{
+    white-space:nowrap; text-decoration:none; color:var(--ink-soft);
+    font-size:13.5px; font-weight:600; padding:9px 15px; border-radius:99px;
+    transition:.2s; border:1px solid transparent;
+  }
+  .tabs a:hover{background:var(--paper-2); color:var(--ink);}
+  .tabs a.active{background:var(--red); color:#fff8ec; border-color:var(--red);}
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:var(--maxw); margin:0 auto; padding:64px 22px 40px;}
+  .intro-note{
+    background:var(--paper-2); border:1px solid var(--line); border-left:4px solid var(--gold);
+    border-radius:10px; padding:18px 22px; font-size:14.5px; color:var(--ink-soft); margin-bottom:60px;
+  }
+  .intro-note b{color:var(--red-deep);}
+
+  .chapter{margin-bottom:96px; scroll-margin-top:70px;}
+  .chapter-head{margin-bottom:34px; padding-bottom:22px; border-bottom:2px solid var(--ink);}
+  .chapter-head .num{
+    display:inline-block; font-family:'Playfair Display',serif; font-weight:700; font-style:italic;
+    color:var(--red); font-size:15px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px;
+  }
+  .chapter-head h2{font-size:clamp(22px,3.4vw,32px); margin:0; line-height:1.3; color:var(--ink);}
+
+  .goal-box{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px 24px; margin:22px 0 30px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03);
+  }
+  .goal-box summary{cursor:pointer; font-weight:600; font-size:14px; color:var(--red-deep); list-style:none;}
+  .goal-box summary::-webkit-details-marker{display:none;}
+  .goal-box summary:before{content:"◆ "; color:var(--gold);}
+  .goal-box ul{margin:14px 0 0; padding-left:20px; font-size:14.5px; color:var(--ink-soft);}
+  .goal-box li{margin-bottom:6px;}
+
+  details.section{
+    border:1px solid var(--line); border-radius:14px; margin-bottom:16px; overflow:hidden;
+    background:#fff;
+  }
+  details.section > summary{
+    cursor:pointer; list-style:none; padding:18px 24px; font-weight:700;
+    font-size:16px; color:var(--ink); display:flex; align-items:center; gap:12px;
+    background:linear-gradient(90deg, var(--paper-2), #fff 60%);
+    transition:.2s;
+  }
+  details.section > summary::-webkit-details-marker{display:none;}
+  details.section > summary .roman{
+    flex:none; width:34px; height:34px; border-radius:50%; background:var(--red);
+    color:#fff8ec; display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:13px; font-weight:700;
+  }
+  details.section[open] > summary{border-bottom:1px solid var(--line);}
+  details.section > summary:hover{background:var(--paper-2);}
+  .section-body{padding:8px 26px 26px;}
+  .section-body p{margin:0 0 15px; font-size:15.5px; color:var(--ink); text-align:justify;}
+  .section-body h4{
+    font-size:16.5px; margin:26px 0 10px; color:var(--red-deep); font-weight:700;
+    border-left:3px solid var(--gold); padding-left:12px;
+  }
+  .section-body h5{
+    font-size:14.5px; margin:18px 0 8px; color:var(--ink); font-weight:600; font-style:italic;
+  }
+  .section-body blockquote{
+    margin:16px 0; padding:12px 18px; background:var(--paper-2); border-left:3px solid var(--red);
+    border-radius:6px; font-size:14.5px; font-style:italic; color:var(--ink-soft);
+  }
+  .period{
+    border-left:2px dashed var(--gold); margin:18px 0 18px 8px; padding:2px 0 2px 20px;
+  }
+  .period h5{color:var(--red-deep); margin-bottom:6px;}
+
+  .discuss{
+    background:#fdf6e3; border:1px dashed var(--gold); border-radius:10px; padding:16px 20px; margin-top:10px; font-size:14px;
+  }
+  .discuss b{color:var(--red-deep); display:block; margin-bottom:8px;}
+  .discuss ol{margin:0; padding-left:18px; color:var(--ink-soft);}
+  .discuss li{margin-bottom:5px;}
+
+  footer{
+    background:var(--red-deep); color:#f3e6c9; padding:46px 22px 32px; margin-top:40px;
+    text-align:center; font-size:13px;
+  }
+  footer .fname{font-family:'Playfair Display',serif; font-size:18px; margin-bottom:8px; color:#fff;}
+  footer a{color:var(--gold-soft);}
+  footer .fine{opacity:.65; margin-top:16px; font-size:11.5px;}
+
+  ::selection{background:var(--gold-soft); color:#2a1300;}
+
+  /* ---------- PORTRAIT (real photo, 3D tilt) ---------- */
+  .portrait-wrap{
+    position:relative; z-index:2; margin:0 auto 14px;
+    width:138px; height:138px; perspective:900px;
+  }
+  .portrait-card{
+    width:100%; height:100%; border-radius:50%; position:relative;
+    transform-style:preserve-3d; transition:transform .15s ease-out;
+    box-shadow:0 0 0 1px rgba(231,207,148,.35), 0 20px 60px rgba(0,0,0,.55), 0 0 80px rgba(201,162,75,.18);
+  }
+  .portrait-card::before{
+    content:""; position:absolute; inset:-8px; border-radius:50%;
+    border:1px solid rgba(201,162,75,.5); transform:translateZ(-14px);
+  }
+  .portrait-card img{
+    width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;
+    filter:saturate(.92) contrast(1.03);
+  }
+  .portrait-caption{
+    text-align:center; font-size:11px; line-height:1.55; letter-spacing:.04em; color:var(--gold-soft);
+    opacity:.82; max-width:610px; margin:0 0 12px;
+  }
+
+  @media (max-width: 620px){
+    .hero{min-height:680px; padding:24px 14px 32px;}
+    .hero-content{padding:8px 6px 16px;}
+    .portrait-wrap{width:112px; height:112px; margin-bottom:12px;}
+    .portrait-caption{font-size:10px; max-width:340px; margin-bottom:14px;}
+    .kicker{font-size:10px; letter-spacing:.2em; margin-bottom:10px;}
+    .hero h1{font-size:clamp(32px, 10vw, 45px); margin-bottom:12px;}
+    .hero p.lead{font-size:14px; line-height:1.65; margin-bottom:20px;}
+    .hero-meta{gap:7px;}
+    .pill{font-size:11px; padding:6px 11px;}
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-wrap{
+    background:#fff; border:1px solid var(--line); border-radius:16px; padding:30px 26px;
+    box-shadow:0 4px 24px rgba(0,0,0,.05);
+  }
+  .quiz-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; flex-wrap:wrap; gap:10px;}
+  .quiz-progress{font-size:12.5px; color:var(--ink-soft); letter-spacing:.03em;}
+  .quiz-score{font-size:12.5px; color:var(--red); font-weight:700;}
+  .quiz-bar{height:5px; border-radius:99px; background:var(--paper-2); overflow:hidden; margin-bottom:26px;}
+  .quiz-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--red)); width:0%; transition:width .4s ease;}
+  .quiz-q{font-size:17px; font-weight:700; color:var(--ink); margin-bottom:20px; line-height:1.5;}
+  .quiz-opts{display:flex; flex-direction:column; gap:10px;}
+  .quiz-opt{
+    text-align:left; border:1.5px solid var(--line); background:var(--paper); border-radius:10px;
+    padding:13px 16px; font-size:14.5px; cursor:pointer; transition:.15s; color:var(--ink);
+    font-family:inherit;
+  }
+  .quiz-opt:hover{border-color:var(--gold); background:#fff;}
+  .quiz-opt.correct{border-color:#3a7d44; background:#eaf6ec; color:#20522a; font-weight:600;}
+  .quiz-opt.wrong{border-color:var(--red); background:#fbe9e9; color:var(--red-deep); font-weight:600;}
+  .quiz-opt:disabled{cursor:default;}
+  .quiz-explain{
+    margin-top:16px; padding:13px 16px; border-radius:10px; background:var(--paper-2);
+    font-size:13.5px; color:var(--ink-soft); display:none;
+  }
+  .quiz-nextbar{display:flex; justify-content:flex-end; margin-top:20px;}
+  .quiz-btn{
+    background:var(--red); color:#fff8ec; border:none; padding:11px 26px; border-radius:99px;
+    font-size:13.5px; font-weight:600; cursor:pointer; transition:.15s; font-family:inherit;
+  }
+  .quiz-btn:hover{background:var(--red-deep);}
+  .quiz-btn:disabled{opacity:.4; cursor:default;}
+  .quiz-result{text-align:center; padding:20px 0;}
+  .quiz-result .score-big{
+    font-family:'Playfair Display',serif; font-size:52px; color:var(--red); font-weight:800; margin:10px 0;
+  }
+  .quiz-result p{color:var(--ink-soft); font-size:14.5px;}
+  .quiz-restart{margin-top:18px;}
+
+  /* ---------- 3D CHAPTER BADGE (click to spin) ---------- */
+  .badge3d{width:58px; height:58px; perspective:500px; margin-bottom:12px; cursor:pointer;}
+  .badge3d-inner{
+    position:relative; width:100%; height:100%; transform-style:preserve-3d;
+    animation:badgeSpin 9s linear infinite;
+  }
+  .badge3d-inner.boost{animation-duration:0.9s;}
+  .badge3d-face{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    border-radius:14px; background:linear-gradient(135deg,var(--red),var(--red-deep));
+    border:1px solid var(--gold-soft); color:#fff8ec; font-family:'Playfair Display',serif;
+    font-weight:800; font-size:20px; backface-visibility:hidden;
+    box-shadow:0 6px 16px rgba(0,0,0,.15);
+  }
+  .badge3d-face.back{transform:rotateY(180deg) rotateZ(180deg);}
+  @keyframes badgeSpin{ from{transform:rotateY(0deg);} to{transform:rotateY(360deg);} }
+
+  /* ---------- SIDE PHOTO (real photo, tilt on hover) ---------- */
+  .side-photo{
+    float:right; width:230px; margin:4px 0 20px 26px; perspective:900px;
+  }
+  .side-photo-card{
+    border-radius:12px; overflow:hidden; transform-style:preserve-3d; transition:transform .15s ease-out;
+    box-shadow:0 1px 2px rgba(0,0,0,.06), 0 18px 40px rgba(0,0,0,.16);
+    border:1px solid var(--line);
+  }
+  .side-photo-card img{width:100%; display:block;}
+  .side-photo-cap{font-size:11.5px; color:var(--ink-soft); margin-top:9px; line-height:1.5; text-align:center;}
+  @media (max-width: 720px){ .side-photo{float:none; width:100%; max-width:280px; margin:0 auto 24px;} }
+
+  /* ---------- FIXED FLOATING PHOTO (stays while scrolling) ---------- */
+  .fixed-photo{
+    position:fixed; left:22px; top:50%; transform:translateY(-50%) translateX(-140%);
+    z-index:60; width:132px; opacity:0; transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+    perspective:800px; pointer-events:none;
+  }
+  .fixed-photo.show{ opacity:1; transform:translateY(-50%) translateX(0); pointer-events:auto; }
+  .fixed-photo-card{
+    position:relative; border-radius:14px; overflow:hidden; transform-style:preserve-3d;
+    transition:transform .15s ease-out; border:2px solid var(--gold);
+    box-shadow:0 1px 2px rgba(0,0,0,.08), 0 16px 34px rgba(0,0,0,.28);
+    background:var(--red-deep);
+  }
+  .fixed-photo-card img{width:100%; display:block; opacity:.96;}
+  .fixed-photo-cap{
+    font-size:10px; color:var(--ink-soft); text-align:center; margin-top:8px; line-height:1.4;
+    background:rgba(251,248,241,.9); border-radius:6px; padding:4px 6px;
+  }
+  .fixed-photo-close{
+    position:absolute; top:-9px; right:-9px; width:22px; height:22px; border-radius:50%;
+    background:var(--red); color:#fff8ec; border:2px solid var(--paper); font-size:13px; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2;
+  }
+  @media (max-width: 980px){ .fixed-photo{ left:10px; width:92px; } }
+  @media (max-width: 620px){ .fixed-photo{ display:none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="bg-canvas"></canvas>
+  <div class="hero-content">
+    <div class="portrait-wrap" id="portraitWrap">
+      <div class="portrait-card" id="portraitCard">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ho%20Chi%20Minh%20-%201946%20Portrait.jpg?width=600"
+             alt="Chân dung Chủ tịch Hồ Chí Minh, 1946"
+             loading="eager" referrerpolicy="no-referrer">
+      </div>
+    </div>
+    <div class="portrait-caption">Chủ tịch Hồ Chí Minh · Ảnh chân dung, 1946 · Ảnh tư liệu, Phạm vi công cộng (Wikimedia Commons)</div>
+    <div class="kicker">Bộ Giáo dục và Đào tạo · Hà Nội, 2019</div>
+    <h1>Giáo trình<br>Tư tưởng Hồ Chí Minh</h1>
+    <p class="lead">Trang học tập tổng hợp ba chương đầu — nhập môn, cơ sở hình thành và tư tưởng về độc lập dân tộc gắn liền với chủ nghĩa xã hội.</p>
+    <div class="hero-meta">
+      <span class="pill">Chương I · Khái niệm, đối tượng, phương pháp</span>
+      <span class="pill">Chương II · Cơ sở, quá trình hình thành</span>
+      <span class="pill">Chương III · Độc lập dân tộc & CNXH</span>
+    </div>
+  </div>
+  
+</header>
+
+<div class="fixed-photo" id="fixedPhoto">
+  <div class="fixed-photo-card" id="fixedPhotoCard">
+    <button class="fixed-photo-close" id="fixedPhotoClose" aria-label="Đóng" title="Đóng">×</button>
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ho%20Chi%20Minh%20-%201946%20Portrait.jpg?width=300"
+         alt="Chủ tịch Hồ Chí Minh, chân dung 1946" loading="lazy" referrerpolicy="no-referrer">
+  </div>
+  <div class="fixed-photo-cap">Hồ Chí Minh · 1946</div>
+</div>
+
+<div class="tabs-wrap">
+  <nav class="tabs" id="tabs">
+    <a href="#ch1" class="active">Chương I</a>
+    <a href="#ch2">Chương II</a>
+    <a href="#ch3">Chương III</a>
+    <a href="#quiz">✦ Quiz ôn tập</a>
+  </nav>
+</div>
+
+<main>
+
+<div class="intro-note">
+  <b>Ghi chú:</b> Nội dung dưới đây được biên soạn lại (tóm lược, giữ nguyên cấu trúc đề mục và các luận điểm cốt lõi, có trích dẫn ngắn) từ cuốn <i>Giáo trình Tư tưởng Hồ Chí Minh</i> — dùng cho bậc đại học, không chuyên ngành Lý luận chính trị, Bộ Giáo dục và Đào tạo, Nhà xuất bản Chính trị quốc gia Sự thật, Hà Nội, 2019 (chủ biên: Mạch Quang Thắng). Dùng để ôn tập; khi trích dẫn học thuật, vui lòng đối chiếu bản gốc.
+</div>
+
+<!-- ================= CHƯƠNG I ================= -->
+<section class="chapter" id="ch1">
+  <div class="chapter-head">
+    <div class="badge3d"><div class="badge3d-inner"><div class="badge3d-face front">I</div><div class="badge3d-face back">I</div></div></div>
+    <span class="num">Chương I</span>
+    <h2>Khái niệm, đối tượng, phương pháp nghiên cứu và ý nghĩa học tập môn Tư tưởng Hồ Chí Minh</h2>
+  </div>
+
+  <details class="goal-box" open>
+    <summary>Mục tiêu chương</summary>
+    <ul>
+      <li><b>Về kiến thức:</b> trang bị kiến thức nền (nhập môn) về môn học Tư tưởng Hồ Chí Minh.</li>
+      <li><b>Về kỹ năng:</b> hình thành tư duy, kỹ năng phân tích đúng đắn cả về lý luận và thực tiễn.</li>
+      <li><b>Về tư tưởng:</b> củng cố niềm tin vào vai trò của Hồ Chí Minh, vào chế độ xã hội chủ nghĩa và sự lãnh đạo của Đảng.</li>
+    </ul>
+  </details>
+
+  <details class="section reveal" open>
+    <summary><span class="roman">I</span> Khái niệm tư tưởng Hồ Chí Minh</summary>
+    <div class="section-body">
+      <p>Đại hội đại biểu toàn quốc lần thứ XI của Đảng (năm 2011) nêu khái niệm chính thức:</p>
+      <blockquote>“Tư tưởng Hồ Chí Minh là một hệ thống quan điểm toàn diện và sâu sắc về những vấn đề cơ bản của cách mạng Việt Nam, kết quả của sự vận dụng và phát triển sáng tạo chủ nghĩa Mác – Lênin vào điều kiện cụ thể của nước ta, kế thừa và phát triển các giá trị truyền thống tốt đẹp của dân tộc, tiếp thu tinh hoa văn hoá nhân loại; là tài sản tinh thần vô cùng to lớn và quý giá của Đảng và dân tộc ta, mãi mãi soi đường cho sự nghiệp cách mạng của nhân dân ta giành thắng lợi.”</blockquote>
+      <p>Khái niệm trên làm rõ ba nội dung cốt lõi:</p>
+      <p><b>Một là,</b> nêu rõ <i>bản chất khoa học và cách mạng</i> cũng như nội dung cơ bản của tư tưởng Hồ Chí Minh — hệ thống quan điểm toàn diện, sâu sắc về mục tiêu xây dựng một nước Việt Nam hoà bình, thống nhất, độc lập, dân chủ, giàu mạnh; con đường là độc lập dân tộc gắn liền với chủ nghĩa xã hội, dưới sự lãnh đạo của Đảng Cộng sản Việt Nam.</p>
+      <p><b>Hai là,</b> nêu <i>cơ sở hình thành</i>: chủ nghĩa Mác – Lênin là giá trị cơ bản nhất; đồng thời tư tưởng Hồ Chí Minh bắt nguồn từ giá trị truyền thống tốt đẹp của dân tộc và tinh hoa văn hoá nhân loại.</p>
+      <p><b>Ba là,</b> nêu <i>ý nghĩa</i>: là tài sản tinh thần vô cùng to lớn và quý giá của Đảng và dân tộc, cùng chủ nghĩa Mác – Lênin làm nền tảng tư tưởng, kim chỉ nam cho hành động của Đảng.</p>
+
+      <h4>Quá trình nhận thức của Đảng về tư tưởng Hồ Chí Minh</h4>
+      <p>Nhận thức của Đảng về tư tưởng Hồ Chí Minh là một quá trình phát triển liên tục qua các kỳ Đại hội:</p>
+      <div class="period">
+        <h5>Đại hội II (1951)</h5>
+        <p>Khẳng định đường lối chính trị, nền nếp làm việc và đạo đức cách mạng của Đảng là đường lối, tác phong, đạo đức Hồ Chủ tịch; toàn Đảng phải ra sức học tập.</p>
+      </div>
+      <div class="period">
+        <h5>Sau khi Người qua đời (1969) đến Đại hội IV, V (1976, 1982)</h5>
+        <p>Ban Chấp hành Trung ương tôn vinh Hồ Chí Minh là “anh hùng dân tộc vĩ đại”; Đảng nhấn mạnh việc tổ chức học tập có hệ thống tư tưởng, đạo đức, tác phong của Người trong toàn Đảng.</p>
+      </div>
+      <div class="period">
+        <h5>Đại hội VI (1986) – VII (1991)</h5>
+        <p>Đại hội VII là mốc lớn: lần đầu tiên Đảng chính thức khẳng định <i>“Đảng lấy chủ nghĩa Mác – Lênin và tư tưởng Hồ Chí Minh làm nền tảng tư tưởng, kim chỉ nam cho hành động”</i>, đồng thời nêu định nghĩa đầu tiên về tư tưởng Hồ Chí Minh.</p>
+      </div>
+      <div class="period">
+        <h5>Đại hội IX (2001) – X (2006) – XI (2011) – XII (2016)</h5>
+        <p>Nhận thức ngày càng đầy đủ, toàn diện hơn, hoàn thiện dần khái niệm và khẳng định phải “kiên định chủ nghĩa Mác–Lênin, tư tưởng Hồ Chí Minh, vận dụng sáng tạo và phát triển phù hợp với thực tiễn Việt Nam”.</p>
+      </div>
+      <p>Ở bình diện quốc tế, năm 1987 Tổ chức Giáo dục, Khoa học và Văn hoá Liên hợp quốc (UNESCO) ra Nghị quyết 24C/18.6.5 nhân dịp kỷ niệm 100 năm Ngày sinh Chủ tịch Hồ Chí Minh, ghi nhận Người là <b>“Anh hùng giải phóng dân tộc và Nhà văn hoá kiệt xuất của Việt Nam”</b>.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">II</span> Đối tượng nghiên cứu môn học Tư tưởng Hồ Chí Minh</summary>
+    <div class="section-body">
+      <p>Môn học Tư tưởng Hồ Chí Minh là một nội dung của chuyên ngành Hồ Chí Minh học (thuộc ngành Khoa học chính trị). Đối tượng nghiên cứu gồm hai bộ phận gắn bó chặt chẽ:</p>
+      <p><b>Thứ nhất,</b> toàn bộ hệ thống quan điểm của Hồ Chí Minh thể hiện trong di sản của Người — những vấn đề lý luận và thực tiễn rút ra từ cuộc đời hoạt động cách mạng phong phú, hướng tới mục tiêu giải phóng dân tộc, giải phóng xã hội, giải phóng giai cấp, giải phóng con người.</p>
+      <p><b>Thứ hai,</b> quá trình <i>“hiện thực hoá”</i> hệ thống quan điểm đó trong thực tiễn cách mạng Việt Nam qua từng giai đoạn lịch sử — tương tự cách chủ nghĩa Mác – Lênin được các đảng cộng sản vận dụng sáng tạo vào điều kiện cụ thể của dân tộc và thời đại mình.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">III</span> Phương pháp nghiên cứu</summary>
+    <div class="section-body">
+      <h4>1. Phương pháp luận của việc nghiên cứu tư tưởng Hồ Chí Minh</h4>
+      <p>Phương pháp luận Hồ Chí Minh lấy chủ nghĩa duy vật biện chứng và duy vật lịch sử Mác – Lênin làm cơ sở. Một số nguyên tắc phương pháp luận cơ bản:</p>
+      <h5>a) Thống nhất tính đảng và tính khoa học</h5>
+      <p>Phải đứng trên lập trường giai cấp công nhân, quan điểm của chủ nghĩa Mác – Lênin, quán triệt cương lĩnh, đường lối của Đảng để nhận thức, đồng thời bảo đảm tính khách quan, khoa học của các luận đề nêu ra.</p>
+      <h5>b) Thống nhất lý luận và thực tiễn</h5>
+      <p>Hồ Chí Minh coi lý luận và thực tiễn phải thống nhất chặt chẽ. Người viết: <i>“Lý luận là đem thực tế trong lịch sử, trong kinh nghiệm, trong các cuộc tranh đấu, xem xét, so sánh thật kỹ lưỡng rõ ràng, làm thành kết luận. Rồi lại đem nó chứng minh với thực tế… Không có lý luận thì lúng túng như nhắm mắt mà đi.”</i> Người phê phán bệnh “lý luận suông” và bệnh kinh nghiệm chủ nghĩa (“có kinh nghiệm mà không có lý luận, cũng như một mắt sáng, một mắt mờ”).</p>
+      <h5>c) Quan điểm lịch sử – cụ thể</h5>
+      <p>Xem xét sự vật, hiện tượng trong mối liên hệ lịch sử: nó xuất hiện thế nào, trải qua những giai đoạn phát triển nào, để nhận rõ bản chất tư tưởng Hồ Chí Minh mang đậm dấu ấn của một quá trình phát triển sáng tạo, đổi mới không ngừng.</p>
+      <h5>d) Quan điểm toàn diện và hệ thống</h5>
+      <p>Tư tưởng Hồ Chí Minh là một hệ thống quan điểm thống nhất biện chứng, xoay quanh hạt nhân cốt lõi là <b>độc lập, tự do, dân chủ và chủ nghĩa xã hội</b>. Tách rời một yếu tố khỏi hệ thống sẽ dẫn đến hiểu sai.</p>
+      <h5>e) Quan điểm kế thừa và phát triển</h5>
+      <p>Nghiên cứu, học tập tư tưởng Hồ Chí Minh không chỉ để kế thừa, vận dụng mà còn phải phát triển sáng tạo trong điều kiện lịch sử mới, bối cảnh cụ thể của đất nước và quốc tế.</p>
+
+      <h4>2. Một số phương pháp cụ thể</h4>
+      <p>Trong nghiên cứu tư tưởng Hồ Chí Minh thường sử dụng kết hợp: <b>phương pháp lôgíc và phương pháp lịch sử</b> (tìm bản chất và quy luật vận động, đồng thời theo trình tự thời gian phát sinh – phát triển); <b>phương pháp phân tích văn bản kết hợp nghiên cứu hoạt động thực tiễn</b> của Người (không chỉ dựa vào <i>Hồ Chí Minh Toàn tập</i> mà cả thực tiễn chỉ đạo cách mạng); và <b>phương pháp chuyên ngành, liên ngành</b> (chính trị học, triết học, kinh tế học, sử học…), cùng các phương pháp phân tích, tổng hợp, so sánh, điều tra xã hội học khi cần thiết.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">IV</span> Ý nghĩa của việc học tập môn học</summary>
+    <div class="section-body">
+      <h4>1. Góp phần nâng cao năng lực tư duy lý luận</h4>
+      <p>Trang bị hệ thống tri thức, thế giới quan và phương pháp luận khoa học, giúp sinh viên nâng cao năng lực nhận thức và vận dụng sáng tạo vào thực tiễn cách mạng Việt Nam.</p>
+      <h4>2. Giáo dục và thực hành đạo đức cách mạng, củng cố niềm tin khoa học</h4>
+      <p>Gắn liền lý tưởng cách mạng với việc học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh, củng cố niềm tin khoa học vào con đường độc lập dân tộc gắn liền với chủ nghĩa xã hội.</p>
+    </div>
+  </details>
+
+  <div class="discuss">
+    <b>Nội dung thảo luận</b>
+    <ol>
+      <li>Qua nhận thức nội hàm khái niệm Tư tưởng Hồ Chí Minh, hãy đưa ra nhận xét về quá trình phát triển nhận thức của Đảng.</li>
+      <li>Phân tích tầm quan trọng của việc sử dụng các phương pháp nghiên cứu tư tưởng Hồ Chí Minh.</li>
+      <li>Phân tích giá trị, ý nghĩa của Tư tưởng Hồ Chí Minh.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= CHƯƠNG II ================= -->
+<section class="chapter" id="ch2">
+  <div class="chapter-head">
+    <div class="badge3d"><div class="badge3d-inner"><div class="badge3d-face front">II</div><div class="badge3d-face back">II</div></div></div>
+    <span class="num">Chương II</span>
+    <h2>Cơ sở, quá trình hình thành và phát triển tư tưởng Hồ Chí Minh</h2>
+  </div>
+
+  <div class="side-photo" id="sidePhoto">
+    <div class="side-photo-card" id="sidePhotoCard">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ho%20Chi%20Minh%20and%20Vo%20Nguyen%20Giap%20(1945).jpg?width=460"
+           alt="Chủ tịch Hồ Chí Minh và Đại tướng Võ Nguyên Giáp, năm 1945" loading="lazy" referrerpolicy="no-referrer">
+    </div>
+    <div class="side-photo-cap">Hồ Chí Minh và Võ Nguyên Giáp, 1945 · Ảnh tư liệu, Phạm vi công cộng (Wikimedia Commons)</div>
+  </div>
+
+  <details class="goal-box">
+    <summary>Mục tiêu chương</summary>
+    <ul>
+      <li>Hiểu rõ cơ sở thực tiễn, lý luận và nhân tố chủ quan hình thành tư tưởng Hồ Chí Minh.</li>
+      <li>Nắm được các giai đoạn cơ bản trong quá trình hình thành, phát triển tư tưởng Hồ Chí Minh.</li>
+      <li>Nhận thức được giá trị tư tưởng Hồ Chí Minh đối với cách mạng Việt Nam và nhân loại.</li>
+    </ul>
+  </details>
+
+  <details class="section reveal" open>
+    <summary><span class="roman">I</span> Cơ sở hình thành tư tưởng Hồ Chí Minh</summary>
+    <div class="section-body">
+      <h4>1. Cơ sở thực tiễn</h4>
+      <h5>a) Thực tiễn Việt Nam cuối thế kỷ XIX đầu thế kỷ XX</h5>
+      <p>Từ năm 1858, thực dân Pháp xâm lược Việt Nam; triều đình nhà Nguyễn từng bước đầu hàng. Các phong trào yêu nước chống Pháp nổ ra liên tục (Trương Định, Nguyễn Trung Trực ở miền Nam; Trần Tấn, Phan Đình Phùng ở miền Trung; Nguyễn Thiện Thuật, Hoàng Hoa Thám ở miền Bắc…) nhưng đều thất bại, chứng tỏ hệ tư tưởng phong kiến đã bất lực trước nhiệm vụ giữ nước.</p>
+      <p>Pháp biến Việt Nam thành nước <i>“thuộc địa nửa phong kiến”</i>, làm xuất hiện các giai tầng mới: công nhân, tư sản, tiểu tư sản thành thị — kéo theo những mâu thuẫn xã hội mới bên cạnh mâu thuẫn nông dân – địa chủ.</p>
+      <p>Đầu thế kỷ XX, các phong trào yêu nước theo khuynh hướng dân chủ tư sản xuất hiện (Đông Du của Phan Bội Châu 1905–1909, Duy Tân của Phan Châu Trinh 1906–1908, Đông Kinh Nghĩa Thục 1907…) nhưng đều thất bại do giai cấp tư sản Việt Nam còn non yếu, chưa có đường lối đúng đắn — đặt ra câu hỏi lớn: <i>cứu nước bằng con đường nào?</i> Chính trong bối cảnh khủng hoảng đường lối đó, sự ra đời và phát triển của giai cấp công nhân Việt Nam đã tạo tiền đề cho một hướng đi mới.</p>
+      <h5>b) Thực tiễn thế giới cuối thế kỷ XIX đầu thế kỷ XX</h5>
+      <p>Chủ nghĩa tư bản chuyển từ tự do cạnh tranh sang giai đoạn đế quốc chủ nghĩa, làm sâu sắc thêm các mâu thuẫn: tư sản – vô sản, giữa các đế quốc với nhau, và giữa các dân tộc thuộc địa với chủ nghĩa đế quốc.</p>
+      <p>Cách mạng Tháng Mười Nga (1917) thắng lợi mở ra thời đại mới — thời đại quá độ từ chủ nghĩa tư bản lên chủ nghĩa xã hội, mở đường giải phóng cho các dân tộc bị áp bức. Quốc tế Cộng sản ra đời (1919) thúc đẩy phong trào cộng sản và công nhân quốc tế phát triển mạnh mẽ — có ảnh hưởng sâu sắc tới Nguyễn Ái Quốc trên hành trình tìm đường cứu nước.</p>
+
+      <h4>2. Cơ sở lý luận</h4>
+      <h5>a) Giá trị truyền thống tốt đẹp của dân tộc Việt Nam</h5>
+      <p>Chủ nghĩa yêu nước là giá trị xuyên suốt, là động lực thúc đẩy Hồ Chí Minh ra đi tìm đường cứu nước và tìm thấy con đường cứu nước ở chủ nghĩa Mác – Lênin. Bên cạnh đó là truyền thống đoàn kết, nhân nghĩa, cần cù, sáng tạo, hiếu học của dân tộc.</p>
+      <h5>b) Tinh hoa văn hoá nhân loại</h5>
+      <p>Hồ Chí Minh tiếp thu có chọn lọc tinh hoa văn hoá phương Đông (Nho giáo, Phật giáo, chủ nghĩa Tam dân của Tôn Trung Sơn) và văn hoá phương Tây (tư tưởng tự do, bình đẳng, bác ái của cách mạng Pháp và Mỹ; đọc Sếchxpia, Lỗ Tấn, Huygô, Zôla…).</p>
+      <h5>c) Chủ nghĩa Mác – Lênin</h5>
+      <p>Là cơ sở lý luận quyết định bước phát triển về chất trong tư tưởng Hồ Chí Minh. Người khẳng định: <i>“Bây giờ học thuyết nhiều, chủ nghĩa nhiều, nhưng chủ nghĩa chân chính nhất, chắc chắn nhất, cách mạng nhất là chủ nghĩa Lênin.”</i> Trên nền tảng thế giới quan và phương pháp luận Mác – Lênin, Hồ Chí Minh đã kế thừa, đổi mới các giá trị truyền thống dân tộc và tinh hoa nhân loại, hình thành nên hệ thống quan điểm toàn diện về cách mạng Việt Nam. Người từng nói về các bậc thầy tư tưởng: <i>“Học thuyết Khổng Tử có ưu điểm là sự tu dưỡng đạo đức cá nhân. Tôn giáo Giêxu có ưu điểm là lòng nhân ái cao cả. Chủ nghĩa Mác có ưu điểm là phương pháp làm việc biện chứng. Chủ nghĩa Tôn Dật Tiên có ưu điểm là chính sách của nó phù hợp với điều kiện nước ta… Tôi cố gắng làm học trò nhỏ của các vị ấy.”</i></p>
+
+      <h4>3. Nhân tố chủ quan Hồ Chí Minh</h4>
+      <h5>a) Phẩm chất Hồ Chí Minh</h5>
+      <p>Lý tưởng cao cả, hoài bão lớn cứu dân cứu nước; ý chí, nghị lực to lớn (ra đi tìm đường cứu nước với hai bàn tay trắng); bản lĩnh tư duy độc lập, tự chủ, sáng tạo, giàu tính phê phán; tầm nhìn chiến lược bao quát thời đại; và trọn đời tận trung với nước, tận hiếu với dân.</p>
+      <h5>b) Tài năng hoạt động, tổng kết thực tiễn, phát triển lý luận</h5>
+      <p>Trước khi trở thành Chủ tịch nước, Hồ Chí Minh đã sống, học tập, hoạt động ở khoảng 30 nước, thấu hiểu sâu sắc bản chất chủ nghĩa thực dân, đế quốc qua chính cuộc sống và hoạt động thực tiễn. Người là nhà tổ chức vĩ đại: tham gia sáng lập Đảng Cộng sản Pháp, sáng lập Đảng Cộng sản Việt Nam, Mặt trận Dân tộc thống nhất, Quân đội nhân dân Việt Nam và khai sinh Nhà nước kiểu mới ở Việt Nam.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">II</span> Quá trình hình thành và phát triển tư tưởng Hồ Chí Minh</summary>
+    <div class="section-body">
+      <p>Quá trình này được chia thành năm thời kỳ chính:</p>
+      <div class="period">
+        <h5>1. Trước ngày 5-6-1911 — Hình thành tư tưởng yêu nước và chí hướng tìm con đường cứu nước mới</h5>
+        <p>Hồ Chí Minh tiếp thu truyền thống tốt đẹp của quê hương, gia đình, dân tộc; sớm có tinh thần yêu nước, thương dân và nhận ra những hạn chế trong chủ trương cứu nước của các bậc tiền bối để tự tìm hướng đi riêng.</p>
+      </div>
+      <div class="period">
+        <h5>2. Giữa năm 1911 – cuối năm 1920 — Dần hình thành tư tưởng cứu nước, giải phóng dân tộc theo con đường cách mạng vô sản</h5>
+        <p>Ngày 5-6-1911, Người ra đi tìm đường cứu nước. Qua khảo sát thực tiễn nhiều nước, năm 1920, Người đọc <i>Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và thuộc địa</i> của Lênin và tán thành Quốc tế III, tham gia sáng lập Đảng Cộng sản Pháp (12-1920) — đánh dấu bước ngoặt quyết định: từ chủ nghĩa yêu nước đến chủ nghĩa Mác – Lênin, từ người yêu nước trở thành người cộng sản.</p>
+      </div>
+      <div class="period">
+        <h5>3. Đầu năm 1921 – đầu năm 1930 — Hình thành cơ bản tư tưởng về con đường cách mạng Việt Nam</h5>
+        <p>Người tích cực truyền bá chủ nghĩa Mác – Lênin về nước qua báo <i>Thanh niên</i>, tổ chức Hội Việt Nam Cách mạng Thanh niên (1925) và tác phẩm <i>Đường cách mệnh</i> (1927) — xác định cách mạng Việt Nam phải do Đảng Cộng sản lãnh đạo, lực lượng là toàn dân với nòng cốt liên minh công – nông. Đầu năm 1930, Người chủ trì Hội nghị hợp nhất các tổ chức cộng sản, sáng lập Đảng Cộng sản Việt Nam, thông qua Cương lĩnh chính trị đầu tiên — chấm dứt khủng hoảng đường lối cứu nước kéo dài từ cuối thế kỷ XIX.</p>
+      </div>
+      <div class="period">
+        <h5>4. Đầu năm 1930 – đầu năm 1941 — Vượt qua thử thách, giữ vững đường lối, phương pháp cách mạng Việt Nam đúng đắn, sáng tạo</h5>
+        <p>Do ảnh hưởng của quan điểm “tả khuynh” trong Quốc tế Cộng sản, tư tưởng của Hồ Chí Minh về vấn đề dân tộc – giai cấp từng bị hiểu chưa đúng. Nhưng thực tiễn cách mạng đã chứng minh sự đúng đắn trong quan điểm của Người, và tư tưởng đó dần được khẳng định trở lại.</p>
+      </div>
+      <div class="period">
+        <h5>5. Đầu năm 1941 – tháng 9-1969 — Tư tưởng Hồ Chí Minh tiếp tục phát triển, soi đường cho sự nghiệp cách mạng của nhân dân ta</h5>
+        <p>Người về nước (1941), trực tiếp lãnh đạo cách mạng: thành lập Mặt trận Việt Minh, lãnh đạo Tổng khởi nghĩa Tháng Tám 1945 thành công, khai sinh nước Việt Nam Dân chủ Cộng hoà; tiếp đó lãnh đạo hai cuộc kháng chiến chống Pháp và chống Mỹ, đồng thời từng bước xây dựng chủ nghĩa xã hội ở miền Bắc — tư tưởng Hồ Chí Minh phát triển toàn diện trên mọi lĩnh vực: dân tộc, dân chủ, chủ nghĩa xã hội, Đảng, Nhà nước, văn hoá, đạo đức, con người…</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">III</span> Giá trị tư tưởng Hồ Chí Minh</summary>
+    <div class="section-body">
+      <h4>1. Đối với cách mạng Việt Nam</h4>
+      <p>Tư tưởng Hồ Chí Minh đưa cách mạng giải phóng dân tộc Việt Nam đi vào quỹ đạo của cách mạng vô sản; là nền tảng tư tưởng, kim chỉ nam cho hành động của Đảng và cách mạng Việt Nam; là tài sản tinh thần vô giá của dân tộc, soi đường cho sự nghiệp xây dựng và bảo vệ Tổ quốc.</p>
+      <h4>2. Đối với sự phát triển tiến bộ của nhân loại</h4>
+      <p>Tư tưởng Hồ Chí Minh góp phần mở ra cho các dân tộc thuộc địa con đường giải phóng dân tộc gắn với tiến bộ xã hội; phản ánh khát vọng của thời đại; góp phần vào cuộc đấu tranh chung của nhân dân thế giới vì hoà bình, độc lập dân tộc, dân chủ và tiến bộ xã hội — được cộng đồng quốc tế, tiêu biểu là UNESCO, vinh danh là Anh hùng giải phóng dân tộc, Nhà văn hoá kiệt xuất.</p>
+    </div>
+  </details>
+
+  <div class="discuss">
+    <b>Nội dung thảo luận</b>
+    <ol>
+      <li>Phân tích những cơ sở khách quan hình thành, phát triển tư tưởng Hồ Chí Minh.</li>
+      <li>Chỉ ra những bước tiến trong nhận thức, những dấu mốc cơ bản trong quá trình hình thành tư tưởng Hồ Chí Minh.</li>
+      <li>Phân tích những phẩm chất cá nhân và mối quan hệ giữa hoạt động lý luận với thực tiễn của Hồ Chí Minh.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= CHƯƠNG III ================= -->
+<section class="chapter" id="ch3">
+  <div class="chapter-head">
+    <div class="badge3d"><div class="badge3d-inner"><div class="badge3d-face front">III</div><div class="badge3d-face back">III</div></div></div>
+    <span class="num">Chương III</span>
+    <h2>Tư tưởng Hồ Chí Minh về độc lập dân tộc và chủ nghĩa xã hội</h2>
+  </div>
+
+  <details class="goal-box">
+    <summary>Mục tiêu chương</summary>
+    <ul>
+      <li>Nắm được những quan điểm cơ bản của Hồ Chí Minh về độc lập dân tộc và về chủ nghĩa xã hội.</li>
+      <li>Hiểu rõ mối quan hệ biện chứng giữa độc lập dân tộc và chủ nghĩa xã hội trong tư tưởng của Người.</li>
+      <li>Vận dụng vào sự nghiệp xây dựng và bảo vệ Tổ quốc Việt Nam xã hội chủ nghĩa hiện nay.</li>
+    </ul>
+  </details>
+
+  <details class="section reveal" open>
+    <summary><span class="roman">I</span> Tư tưởng Hồ Chí Minh về độc lập dân tộc</summary>
+    <div class="section-body">
+      <h4>1. Vấn đề độc lập dân tộc</h4>
+      <h5>a) Độc lập, tự do là quyền thiêng liêng, bất khả xâm phạm của tất cả các dân tộc</h5>
+      <p>Năm 1919, thay mặt những người Việt Nam yêu nước tại Pháp, Nguyễn Ái Quốc gửi tới Hội nghị Vécxây bản <i>Yêu sách của nhân dân An Nam</i> đòi quyền bình đẳng và tự do dân chủ — dù không được chấp nhận, đây là lần đầu tiên tư tưởng về quyền của các dân tộc thuộc địa được nêu ra chính thức. Trong <i>Tuyên ngôn Độc lập</i> (1945), Người khẳng định: <i>“Tất cả các dân tộc trên thế giới đều sinh ra bình đẳng, dân tộc nào cũng có quyền sống, quyền sung sướng và quyền tự do… Đó là những lẽ phải không ai chối cãi được.”</i> Đến năm 1965, trước sự leo thang chiến tranh của đế quốc Mỹ, Người đúc kết thành chân lý thời đại: <b>“Không có gì quý hơn độc lập, tự do.”</b></p>
+      <h5>b) Độc lập dân tộc phải gắn liền với tự do, cơm no, áo ấm và hạnh phúc của nhân dân</h5>
+      <p>Hồ Chí Minh khẳng định: <i>“Nước độc lập mà dân không hưởng hạnh phúc tự do, thì độc lập cũng chẳng có nghĩa lý gì.”</i> Ngay sau Cách mạng Tháng Tám, Người yêu cầu: <i>“Làm cho dân có ăn. Làm cho dân có mặc. Làm cho dân có chỗ ở. Làm cho dân có học hành.”</i> Đây chính là tâm nguyện xuyên suốt cuộc đời Người: <i>“Tôi chỉ có một sự ham muốn, ham muốn tột bậc, là làm sao cho nước ta hoàn toàn độc lập, dân ta được hoàn toàn tự do, đồng bào ai cũng có cơm ăn áo mặc, ai cũng được học hành.”</i></p>
+      <h5>c) Độc lập dân tộc phải là nền độc lập thật sự, hoàn toàn và triệt để</h5>
+      <p>Theo Người, độc lập mà không có quyền tự quyết về ngoại giao, không có quân đội và nền tài chính riêng thì độc lập đó không có ý nghĩa gì. Điều này thể hiện qua việc Người ký Hiệp định Sơ bộ 6-3-1946 để Pháp công nhận Việt Nam là một quốc gia tự do có chính phủ, nghị viện, quân đội, tài chính riêng.</p>
+      <h5>d) Độc lập dân tộc gắn liền với thống nhất và toàn vẹn lãnh thổ</h5>
+      <p>Trước âm mưu chia cắt đất nước của thực dân Pháp, Hồ Chí Minh khẳng định trong <i>Thư gửi đồng bào Nam Bộ</i> (1946): <i>“Đồng bào Nam Bộ là dân nước Việt Nam. Sông có thể cạn, núi có thể mòn, song chân lý đó không bao giờ thay đổi.”</i> Trong <i>Di chúc</i>, Người vẫn vững niềm tin: <i>“Tổ quốc ta nhất định sẽ thống nhất. Đồng bào Nam Bắc nhất định sẽ sum họp một nhà.”</i></p>
+
+      <h4>2. Về cách mạng giải phóng dân tộc</h4>
+      <p>Trước sự thất bại của các phong trào yêu nước cuối thế kỷ XIX đầu thế kỷ XX, Hồ Chí Minh đã tìm ra lời giải cho câu hỏi lớn: cách mạng giải phóng dân tộc muốn thắng lợi phải đi theo con đường nào, ai lãnh đạo, lực lượng và phương pháp ra sao. Những luận điểm nổi bật của Người:</p>
+      <p><b>Cách mạng giải phóng dân tộc muốn thắng lợi phải đi theo con đường cách mạng vô sản</b> — khác với con đường dân chủ tư sản đã thất bại, và phải do Đảng Cộng sản lãnh đạo trên nền tảng chủ nghĩa Mác – Lênin; lực lượng là khối đại đoàn kết toàn dân tộc, nòng cốt là liên minh công – nông; đồng thời cách mạng giải phóng dân tộc ở thuộc địa có thể giành thắng lợi <i>trước</i> cách mạng vô sản ở chính quốc — một luận điểm sáng tạo, vượt trước lý luận đương thời của Quốc tế Cộng sản.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">II</span> Tư tưởng Hồ Chí Minh về chủ nghĩa xã hội và xây dựng chủ nghĩa xã hội ở Việt Nam</summary>
+    <div class="section-body">
+      <h4>1. Tư tưởng Hồ Chí Minh về chủ nghĩa xã hội</h4>
+      <p>Hồ Chí Minh tiếp cận chủ nghĩa xã hội từ nhiều phương diện: từ lập trường yêu nước và khát vọng giải phóng dân tộc; từ phương diện đạo đức, hướng tới giải phóng con người một cách toàn diện; từ phương diện văn hoá. Người quan niệm chủ nghĩa xã hội là một xã hội <b>dân giàu, nước mạnh, công bằng, dân chủ, văn minh</b>; do nhân dân lao động làm chủ; có nền kinh tế phát triển cao gắn với phát triển khoa học – kỹ thuật; xoá bỏ áp bức, bóc lột, mang lại đời sống ấm no, tự do, hạnh phúc cho nhân dân; là công trình tập thể của nhân dân dưới sự lãnh đạo của Đảng.</p>
+      <h4>2. Tư tưởng Hồ Chí Minh về xây dựng chủ nghĩa xã hội ở Việt Nam</h4>
+      <p>Người xác định mục tiêu xây dựng chủ nghĩa xã hội toàn diện trên các lĩnh vực: chính trị (do nhân dân lao động làm chủ), kinh tế (công – nông nghiệp hiện đại, khoa học – kỹ thuật tiên tiến), văn hoá – xã hội (nâng cao dân trí, xây dựng con người mới), và xác định động lực quan trọng nhất là con người, trên cơ sở kết hợp sức mạnh dân tộc với sức mạnh thời đại.</p>
+      <h4>3. Tư tưởng Hồ Chí Minh về thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam</h4>
+      <p>Người chỉ rõ đặc điểm của thời kỳ quá độ ở Việt Nam là từ một nước nông nghiệp lạc hậu tiến thẳng lên chủ nghĩa xã hội, không trải qua giai đoạn phát triển tư bản chủ nghĩa — vì vậy đây là một quá trình lâu dài, khó khăn, phức tạp, phải tiến hành dần dần, thận trọng, không thể nôn nóng, chủ quan, đốt cháy giai đoạn.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">III</span> Tư tưởng Hồ Chí Minh về mối quan hệ giữa độc lập dân tộc và chủ nghĩa xã hội</summary>
+    <div class="section-body">
+      <h4>1. Độc lập dân tộc là cơ sở, tiền đề để tiến lên chủ nghĩa xã hội</h4>
+      <p>Trong tư tưởng Hồ Chí Minh, độc lập dân tộc bao giờ cũng gắn liền với định hướng đi lên chủ nghĩa xã hội — vì chỉ có xoá bỏ được ách áp bức thực dân, giành được độc lập thật sự, dân tộc mới có điều kiện phát triển lên một chế độ xã hội tốt đẹp hơn, vì lợi ích của toàn thể nhân dân lao động.</p>
+      <h4>2. Chủ nghĩa xã hội là điều kiện để bảo đảm nền độc lập dân tộc vững chắc</h4>
+      <p>Độc lập dân tộc mà không đi lên chủ nghĩa xã hội thì nhân dân vẫn còn chịu cảnh áp bức, bóc lột. Chủ nghĩa xã hội mới thật sự xoá bỏ được mọi hình thức áp bức, bóc lột, làm cho nhân dân được ấm no, tự do, hạnh phúc, nền độc lập dân tộc mới thực sự vững chắc, lâu bền.</p>
+      <h4>3. Điều kiện để bảo đảm độc lập dân tộc gắn liền với chủ nghĩa xã hội</h4>
+      <p>Đó là: bảo đảm vai trò lãnh đạo tuyệt đối của Đảng Cộng sản trong suốt tiến trình cách mạng; củng cố, tăng cường khối đại đoàn kết toàn dân tộc mà nền tảng là liên minh công – nông – trí thức; đoàn kết, gắn bó chặt chẽ cách mạng Việt Nam với cách mạng thế giới.</p>
+    </div>
+  </details>
+
+  <details class="section reveal">
+    <summary><span class="roman">IV</span> Vận dụng tư tưởng Hồ Chí Minh trong sự nghiệp cách mạng Việt Nam hiện nay</summary>
+    <div class="section-body">
+      <h4>1. Kiên định mục tiêu và con đường cách mạng mà Hồ Chí Minh đã xác định</h4>
+      <p>Kiên định độc lập dân tộc gắn liền với chủ nghĩa xã hội trên nền tảng chủ nghĩa Mác – Lênin và tư tưởng Hồ Chí Minh, đây là vấn đề mang tính nguyên tắc, có ý nghĩa sống còn đối với sự nghiệp cách mạng nước ta.</p>
+      <h4>2. Phát huy sức mạnh dân chủ xã hội chủ nghĩa</h4>
+      <p>Xây dựng, phát huy quyền làm chủ thực sự của nhân dân trên các lĩnh vực chính trị, kinh tế, văn hoá, xã hội, coi đây là động lực to lớn của công cuộc đổi mới.</p>
+      <h4>3. Củng cố, kiện toàn, phát huy sức mạnh và hiệu quả hoạt động của toàn bộ hệ thống chính trị</h4>
+      <p>Xây dựng Đảng trong sạch, vững mạnh; xây dựng Nhà nước pháp quyền xã hội chủ nghĩa của nhân dân, do nhân dân, vì nhân dân; phát huy vai trò Mặt trận Tổ quốc và các đoàn thể nhân dân.</p>
+      <h4>4. Đấu tranh chống những biểu hiện suy thoái về tư tưởng chính trị, đạo đức, lối sống</h4>
+      <p>Kiên quyết đấu tranh phòng, chống tham nhũng, lãng phí, quan liêu và các biểu hiện “tự diễn biến”, “tự chuyển hoá”, bảo vệ nền tảng tư tưởng của Đảng gắn liền với bảo vệ mục tiêu độc lập dân tộc và chủ nghĩa xã hội.</p>
+    </div>
+  </details>
+
+  <div class="discuss">
+    <b>Nội dung thảo luận</b>
+    <ol>
+      <li>Phân tích tính đúng đắn và sáng tạo trong tư tưởng Hồ Chí Minh về độc lập dân tộc.</li>
+      <li>Phân tích tư tưởng Hồ Chí Minh về thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam.</li>
+      <li>Nêu bối cảnh xã hội Việt Nam hiện nay và những yêu cầu cơ bản trong việc vận dụng tư tưởng Hồ Chí Minh về độc lập dân tộc gắn liền với chủ nghĩa xã hội.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section class="chapter" id="quiz">
+  <div class="chapter-head">
+    <span class="num">Ôn tập</span>
+    <h2>Quiz kiểm tra kiến thức — 3 chương đầu</h2>
+  </div>
+  <div class="quiz-wrap reveal">
+    <div id="quizPlay">
+      <div class="quiz-top">
+        <span class="quiz-progress" id="quizProgress">Câu 1 / 10</span>
+        <span class="quiz-score" id="quizScoreLive">Điểm: 0</span>
+      </div>
+      <div class="quiz-bar"><div class="quiz-bar-fill" id="quizBar"></div></div>
+      <div class="quiz-q" id="quizQ"></div>
+      <div class="quiz-opts" id="quizOpts"></div>
+      <div class="quiz-explain" id="quizExplain"></div>
+      <div class="quiz-nextbar">
+        <button class="quiz-btn" id="quizNext" disabled>Câu tiếp theo →</button>
+      </div>
+    </div>
+    <div id="quizResult" class="quiz-result" style="display:none;">
+      <div style="font-size:13px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-soft);">Kết quả</div>
+      <div class="score-big" id="scoreBig">0/10</div>
+      <p id="scoreMsg"></p>
+      <button class="quiz-btn quiz-restart" id="quizRestart">Làm lại</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fname">Giáo trình Tư tưởng Hồ Chí Minh</div>
+  <div>Bộ Giáo dục và Đào tạo · Nhà xuất bản Chính trị quốc gia Sự thật · Hà Nội, 2019</div>
+  <div class="fine">Trang tổng hợp phục vụ mục đích học tập cá nhân · Thiết kế minh hoạ với Three.js</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var canvas = document.getElementById('bg-canvas');
+  if(!window.THREE || !canvas) return;
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.z = 34;
+
+  var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  canvas.style.cursor = 'grab';
+  canvas.style.pointerEvents = 'auto';
+
+  // Group the interactive objects so the whole assembly can be drag-rotated by the user
+  var sceneGroup = new THREE.Group();
+  scene.add(sceneGroup);
+
+  // ---- Starfield (particle dust) ----
+  var starGeo = new THREE.BufferGeometry();
+  var starCount = 900;
+  var positions = new Float32Array(starCount*3);
+  for(var i=0;i<starCount;i++){
+    positions[i*3]   = (Math.random()-0.5)*140;
+    positions[i*3+1] = (Math.random()-0.5)*90;
+    positions[i*3+2] = (Math.random()-0.5)*90 - 10;
+  }
+  starGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  var starMat = new THREE.PointsMaterial({color:0xe7cf94, size:0.35, transparent:true, opacity:0.75});
+  var stars = new THREE.Points(starGeo, starMat);
+  scene.add(stars);
+
+  // ---- Central rotating gold icosahedron (wireframe) ----
+  var icoGeo = new THREE.IcosahedronGeometry(11, 1);
+  var icoMat = new THREE.MeshBasicMaterial({color:0xc9a24b, wireframe:true, transparent:true, opacity:0.55});
+  var ico = new THREE.Mesh(icoGeo, icoMat);
+  sceneGroup.add(ico);
+
+  // ---- Inner deep-red solid core ----
+  var coreGeo = new THREE.IcosahedronGeometry(6.4, 0);
+  var coreMat = new THREE.MeshBasicMaterial({color:0x8a1c2a, wireframe:true, transparent:true, opacity:0.5});
+  var core = new THREE.Mesh(coreGeo, coreMat);
+  sceneGroup.add(core);
+
+  // ---- Outer thin ring ----
+  var ringGeo = new THREE.TorusGeometry(16, 0.06, 8, 100);
+  var ringMat = new THREE.MeshBasicMaterial({color:0xf6efe0, transparent:true, opacity:0.35});
+  var ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI/2.3;
+  sceneGroup.add(ring);
+
+  var ring2 = ring.clone();
+  ring2.rotation.x = Math.PI/1.6;
+  ring2.rotation.y = Math.PI/4;
+  sceneGroup.add(ring2);
+
+  // ---- Gold 5-point star (nod to the national flag) — click it! ----
+  function starShape(){
+    var shape = new THREE.Shape();
+    var spikes = 5, outerR = 2.6, innerR = 1.0;
+    for(var i=0;i<spikes*2;i++){
+      var r = (i%2===0)? outerR: innerR;
+      var a = (i/(spikes*2))*Math.PI*2 - Math.PI/2;
+      var x = Math.cos(a)*r, y = Math.sin(a)*r;
+      if(i===0) shape.moveTo(x,y); else shape.lineTo(x,y);
+    }
+    shape.closePath();
+    return shape;
+  }
+  var starGeo2 = new THREE.ExtrudeGeometry(starShape(), {depth:0.25, bevelEnabled:true, bevelThickness:0.08, bevelSize:0.06, bevelSegments:2});
+  var starMat2 = new THREE.MeshBasicMaterial({color:0xe7cf94, transparent:true, opacity:0.9});
+  var starMesh = new THREE.Mesh(starGeo2, starMat2);
+  starMesh.position.set(0,0,3.2);
+  sceneGroup.add(starMesh);
+  var starMeshBack = starMesh.clone();
+  starMeshBack.position.set(0,0,-3.2);
+  starMeshBack.rotation.y = Math.PI;
+  sceneGroup.add(starMeshBack);
+
+  // ---- Floating real photo plane (textured), orbits gently ----
+  var photoGroup = new THREE.Group();
+  sceneGroup.add(photoGroup);
+  var texLoader = new THREE.TextureLoader();
+  texLoader.crossOrigin = 'anonymous';
+  texLoader.load(
+    'https://commons.wikimedia.org/wiki/Special:FilePath/Ho%20Chi%20Minh%20-%201946%20Portrait.jpg?width=500',
+    function(tex){
+      var w = 5.4, h = w*(667/500);
+      var frameGeo = new THREE.PlaneGeometry(w+0.3, h+0.3);
+      var frameMat = new THREE.MeshBasicMaterial({color:0xc9a24b, transparent:true, opacity:0.9});
+      var frame = new THREE.Mesh(frameGeo, frameMat);
+      var photoGeo = new THREE.PlaneGeometry(w, h);
+      var photoMat = new THREE.MeshBasicMaterial({map:tex, transparent:true, opacity:0.96});
+      var photo = new THREE.Mesh(photoGeo, photoMat);
+      photo.position.z = 0.02;
+      frame.add(photo);
+      frame.position.set(20, 4, -18);
+      photoGroup.add(frame);
+    },
+    undefined,
+    function(){ /* texture failed to load (e.g. offline) — silently skip, DOM portrait still shows */ }
+  );
+
+  // ---- Pointer-drag to rotate the whole assembly, click the star for a burst ----
+  var isDragging = false, prevPX = 0, prevPY = 0, dragRotY = 0, dragRotX = 0, movedDist = 0, burstAt = -999;
+  var raycaster = new THREE.Raycaster();
+  var ndc = new THREE.Vector2();
+  canvas.addEventListener('pointerdown', function(e){
+    isDragging = true; prevPX = e.clientX; prevPY = e.clientY; movedDist = 0;
+    canvas.style.cursor = 'grabbing';
+  });
+  window.addEventListener('pointerup', function(e){
+    if(isDragging && movedDist < 6){
+      // treat as a click — burst the star
+      burstAt = clock.getElapsedTime();
+    }
+    isDragging = false; canvas.style.cursor = 'grab';
+  });
+  window.addEventListener('pointermove', function(e){
+    if(!isDragging) return;
+    var dx = e.clientX - prevPX, dy = e.clientY - prevPY;
+    movedDist += Math.abs(dx) + Math.abs(dy);
+    dragRotY += dx * 0.006;
+    dragRotX += dy * 0.006;
+    dragRotX = Math.max(-1.1, Math.min(1.1, dragRotX));
+    prevPX = e.clientX; prevPY = e.clientY;
+  });
+
+  var mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', function(e){
+    mouseX = (e.clientX/window.innerWidth - 0.5);
+    mouseY = (e.clientY/window.innerHeight - 0.5);
+  });
+
+  window.addEventListener('resize', function(){
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  var clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    var t = clock.getElapsedTime();
+    ico.rotation.y = t*0.09;
+    ico.rotation.x = t*0.05;
+    core.rotation.y = -t*0.13;
+    core.rotation.x = t*0.07;
+    ring.rotation.z = t*0.04;
+    ring2.rotation.z = -t*0.03;
+    stars.rotation.y = t*0.006;
+    var burstT = t - burstAt;
+    var burstK = burstT>=0 && burstT<0.9 ? Math.sin(burstT*Math.PI/0.9) : 0;
+    starMesh.rotation.z = t*0.15 + burstK*4;
+    starMeshBack.rotation.z = -t*0.15 - burstK*4;
+    var pulse = 1 + Math.sin(t*1.6)*0.05 + burstK*0.9;
+    starMesh.scale.set(pulse,pulse,pulse);
+    starMeshBack.scale.set(pulse,pulse,pulse);
+    sceneGroup.rotation.y = dragRotY + t*0.01;
+    sceneGroup.rotation.x = dragRotX;
+    photoGroup.rotation.y = t*0.035;
+    photoGroup.position.y = Math.sin(t*0.4)*1.2;
+
+    camera.position.x += (mouseX*6 - camera.position.x)*0.02;
+    camera.position.y += (-mouseY*4 - camera.position.y)*0.02;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+  requestAnimationFrame(function(){ canvas.style.opacity = 0.64; });
+})();
+</script>
+
+<script>
+  // Active tab highlighting on scroll
+  (function(){
+    var links = document.querySelectorAll('#tabs a');
+    var sections = Array.prototype.map.call(links, function(a){
+      return document.querySelector(a.getAttribute('href'));
+    });
+    function onScroll(){
+      var pos = window.scrollY + 120;
+      var idx = 0;
+      sections.forEach(function(sec, i){
+        if(sec && sec.offsetTop <= pos) idx = i;
+      });
+      links.forEach(function(a,i){ a.classList.toggle('active', i===idx); });
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  })();
+</script>
+
+<script>
+  // Portrait 3D tilt on mouse / device orientation
+  (function(){
+    var wrap = document.getElementById('portraitWrap');
+    var card = document.getElementById('portraitCard');
+    if(!wrap || !card) return;
+    wrap.addEventListener('mousemove', function(e){
+      var r = wrap.getBoundingClientRect();
+      var x = (e.clientX - r.left)/r.width - 0.5;
+      var y = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = 'rotateY('+(x*26)+'deg) rotateX('+(-y*26)+'deg) translateZ(10px)';
+    });
+    wrap.addEventListener('mouseleave', function(){
+      card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+    });
+    window.addEventListener('scroll', function(){
+      var r = wrap.getBoundingClientRect();
+      var t = Math.max(-1, Math.min(1, (r.top-40)/300));
+      card.style.transform = 'rotateY('+(t*10)+'deg) rotateX('+(t*-4)+'deg)';
+    });
+  })();
+</script>
+
+<script>
+  // Side photo tilt-on-hover (Chapter II)
+  (function(){
+    var wrap = document.getElementById('sidePhoto');
+    var card = document.getElementById('sidePhotoCard');
+    if(!wrap || !card) return;
+    wrap.addEventListener('mousemove', function(e){
+      var r = wrap.getBoundingClientRect();
+      var x = (e.clientX - r.left)/r.width - 0.5;
+      var y = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = 'rotateY('+(x*18)+'deg) rotateX('+(-y*18)+'deg) translateZ(6px)';
+    });
+    wrap.addEventListener('mouseleave', function(){
+      card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  })();
+</script>
+
+<script>
+  // Fixed floating photo — shows once hero is scrolled past, stays while scrolling, closable
+  (function(){
+    var el = document.getElementById('fixedPhoto');
+    var card = document.getElementById('fixedPhotoCard');
+    var closeBtn = document.getElementById('fixedPhotoClose');
+    if(!el || !card || !closeBtn) return;
+    var dismissed = false;
+    var heroH = (document.querySelector('.hero') || {offsetHeight: 600}).offsetHeight;
+
+    function onScroll(){
+      if(dismissed) return;
+      var past = window.scrollY > heroH * 0.6;
+      var nearFooter = (document.body.scrollHeight - (window.scrollY + window.innerHeight)) < 200;
+      el.classList.toggle('show', past && !nearFooter);
+    }
+    window.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', function(){ heroH = document.querySelector('.hero').offsetHeight; onScroll(); });
+    onScroll();
+
+    closeBtn.addEventListener('click', function(){
+      dismissed = true;
+      el.classList.remove('show');
+    });
+
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      var x = (e.clientX - r.left)/r.width - 0.5;
+      var y = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = 'rotateY('+(x*16)+'deg) rotateX('+(-y*16)+'deg)';
+    });
+    el.addEventListener('mouseleave', function(){
+      card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  })();
+</script>
+<script>
+  // 3D chapter badges — click to spin faster for a moment
+  (function(){
+    document.querySelectorAll('.badge3d-inner').forEach(function(el){
+      el.addEventListener('click', function(){
+        el.classList.add('boost');
+        setTimeout(function(){ el.classList.remove('boost'); }, 1400);
+      });
+    });
+  })();
+</script>
+
+<script>
+  // Scroll reveal for section cards
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(el){el.classList.add('in');}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+<script>
+  // ---------------- QUIZ ----------------
+  (function(){
+    var QUESTIONS = [
+      {q:"Đại hội nào của Đảng lần đầu tiên chính thức khẳng định lấy chủ nghĩa Mác – Lênin và tư tưởng Hồ Chí Minh làm nền tảng tư tưởng, kim chỉ nam cho hành động?",
+       opts:["Đại hội II (1951)","Đại hội VI (1986)","Đại hội VII (1991)","Đại hội IX (2001)"], correct:2,
+       explain:"Đại hội VII (1991) là mốc lớn, lần đầu tiên nêu định nghĩa và khẳng định vai trò nền tảng của tư tưởng Hồ Chí Minh."},
+      {q:"Tổ chức nào đã vinh danh Hồ Chí Minh là 'Anh hùng giải phóng dân tộc và Nhà văn hoá kiệt xuất' vào năm 1987?",
+       opts:["Liên Hợp Quốc (UN)","UNESCO","Quốc tế Cộng sản","ASEAN"], correct:1,
+       explain:"Năm 1987, UNESCO ra Nghị quyết 24C/18.6.5 nhân kỷ niệm 100 năm ngày sinh Chủ tịch Hồ Chí Minh."},
+      {q:"Theo Chương I, đối tượng nghiên cứu môn học Tư tưởng Hồ Chí Minh gồm mấy bộ phận cơ bản?",
+       opts:["Một","Hai","Ba","Bốn"], correct:1,
+       explain:"Gồm hệ thống quan điểm của Hồ Chí Minh trong di sản của Người, và quá trình 'hiện thực hoá' hệ thống quan điểm đó trong thực tiễn cách mạng Việt Nam."},
+      {q:"Nguyên tắc phương pháp luận nào nhấn mạnh việc phải bảo đảm tính khách quan, khoa học đồng thời đứng trên lập trường giai cấp công nhân?",
+       opts:["Quan điểm lịch sử – cụ thể","Thống nhất tính đảng và tính khoa học","Quan điểm kế thừa và phát triển","Quan điểm toàn diện và hệ thống"], correct:1,
+       explain:"Đây chính là nguyên tắc 'Thống nhất tính đảng và tính khoa học' trong phương pháp luận nghiên cứu tư tưởng Hồ Chí Minh."},
+      {q:"Nguyễn Ái Quốc tham gia sáng lập Đảng Cộng sản Pháp và tán thành Quốc tế III vào thời điểm nào?",
+       opts:["Tháng 6/1911","Tháng 12/1920","Đầu năm 1930","Năm 1945"], correct:1,
+       explain:"Tháng 12-1920, tại Đại hội Tours, Người tán thành Quốc tế III và tham gia sáng lập Đảng Cộng sản Pháp — bước ngoặt từ người yêu nước thành người cộng sản."},
+      {q:"Đảng Cộng sản Việt Nam được thành lập vào thời điểm nào, đánh dấu sự chấm dứt khủng hoảng đường lối cứu nước?",
+       opts:["Giữa năm 1911","Cuối năm 1920","Đầu năm 1930","Đầu năm 1941"], correct:2,
+       explain:"Đầu năm 1930, Hồ Chí Minh chủ trì Hội nghị hợp nhất, sáng lập Đảng Cộng sản Việt Nam, thông qua Cương lĩnh chính trị đầu tiên."},
+      {q:"Theo tư tưởng Hồ Chí Minh, nguồn gốc lý luận nào đóng vai trò 'quyết định bước phát triển về chất' trong tư tưởng của Người?",
+       opts:["Giá trị truyền thống dân tộc","Tinh hoa văn hoá phương Đông","Chủ nghĩa Mác – Lênin","Tinh hoa văn hoá phương Tây"], correct:2,
+       explain:"Chủ nghĩa Mác – Lênin là cơ sở lý luận quyết định bước phát triển về chất trong tư tưởng Hồ Chí Minh, trên nền đó Người kế thừa các giá trị truyền thống và tinh hoa nhân loại."},
+      {q:"Câu nói nổi tiếng 'Không có gì quý hơn độc lập, tự do' của Hồ Chí Minh ra đời trong bối cảnh nào?",
+       opts:["Tuyên ngôn Độc lập 1945","Lời kêu gọi năm 1965 trước sự leo thang chiến tranh của Mỹ","Di chúc 1969","Đường cách mệnh 1927"], correct:1,
+       explain:"Năm 1965, trước sự leo thang chiến tranh của đế quốc Mỹ, Hồ Chí Minh đúc kết chân lý thời đại này."},
+      {q:"Theo Chương III, cách mạng giải phóng dân tộc ở thuộc địa, theo quan điểm sáng tạo của Hồ Chí Minh, có thể:",
+       opts:["Chỉ nổ ra sau khi cách mạng vô sản ở chính quốc thắng lợi","Giành thắng lợi trước cách mạng vô sản ở chính quốc","Không liên quan đến cách mạng vô sản ở chính quốc","Phải phụ thuộc hoàn toàn vào chính quốc"], correct:1,
+       explain:"Đây là luận điểm sáng tạo, vượt trước lý luận đương thời: cách mạng giải phóng dân tộc ở thuộc địa có thể thắng lợi trước cách mạng vô sản ở chính quốc."},
+      {q:"Trong tư tưởng Hồ Chí Minh về mối quan hệ giữa độc lập dân tộc và chủ nghĩa xã hội, điều gì được xem là 'điều kiện để bảo đảm nền độc lập dân tộc vững chắc'?",
+       opts:["Phát triển kinh tế thị trường tự do","Chủ nghĩa xã hội","Liên minh quân sự với các nước lớn","Duy trì chế độ quân chủ lập hiến"], correct:1,
+       explain:"Chủ nghĩa xã hội mới thật sự xoá bỏ mọi hình thức áp bức, bóc lột, làm cho nền độc lập dân tộc thực sự vững chắc, lâu bền."}
+    ];
+
+    var idx=0, score=0, answered=false;
+    var qEl=document.getElementById('quizQ'), optsEl=document.getElementById('quizOpts'),
+        explainEl=document.getElementById('quizExplain'), nextBtn=document.getElementById('quizNext'),
+        progEl=document.getElementById('quizProgress'), scoreLive=document.getElementById('quizScoreLive'),
+        barEl=document.getElementById('quizBar'), playEl=document.getElementById('quizPlay'),
+        resultEl=document.getElementById('quizResult'), scoreBig=document.getElementById('scoreBig'),
+        scoreMsg=document.getElementById('scoreMsg'), restartBtn=document.getElementById('quizRestart');
+    if(!qEl) return;
+
+    function render(){
+      var item = QUESTIONS[idx];
+      answered = false;
+      qEl.textContent = (idx+1)+'. '+item.q;
+      progEl.textContent = 'Câu '+(idx+1)+' / '+QUESTIONS.length;
+      scoreLive.textContent = 'Điểm: '+score;
+      barEl.style.width = (idx/QUESTIONS.length*100)+'%';
+      explainEl.style.display='none'; explainEl.textContent='';
+      nextBtn.disabled = true;
+      optsEl.innerHTML='';
+      item.opts.forEach(function(opt, i){
+        var b = document.createElement('button');
+        b.className='quiz-opt'; b.type='button'; b.textContent = String.fromCharCode(65+i)+'. '+opt;
+        b.addEventListener('click', function(){ pick(i); });
+        optsEl.appendChild(b);
+      });
+    }
+
+    function pick(i){
+      if(answered) return;
+      answered = true;
+      var item = QUESTIONS[idx];
+      var btns = optsEl.querySelectorAll('.quiz-opt');
+      btns.forEach(function(b,bi){
+        b.disabled = true;
+        if(bi===item.correct) b.classList.add('correct');
+        else if(bi===i) b.classList.add('wrong');
+      });
+      if(i===item.correct) score++;
+      scoreLive.textContent = 'Điểm: '+score;
+      explainEl.style.display='block';
+      explainEl.textContent = (i===item.correct? '✓ Chính xác. ' : '✗ Chưa đúng. ') + item.explain;
+      nextBtn.disabled = false;
+    }
+
+    nextBtn.addEventListener('click', function(){
+      idx++;
+      if(idx>=QUESTIONS.length){
+        barEl.style.width='100%';
+        playEl.style.display='none';
+        resultEl.style.display='block';
+        scoreBig.textContent = score+'/'+QUESTIONS.length;
+        var pct = score/QUESTIONS.length;
+        scoreMsg.textContent = pct>=0.8 ? 'Xuất sắc! Bạn nắm rất chắc nội dung 3 chương đầu.' :
+                                pct>=0.5 ? 'Khá tốt — nên xem lại một số mục chưa chắc.' :
+                                'Nên đọc lại kỹ các chương ở trên rồi thử lại nhé.';
+      } else {
+        render();
+      }
+    });
+
+    restartBtn.addEventListener('click', function(){
+      idx=0; score=0; playEl.style.display='block'; resultEl.style.display='none';
+      render();
+    });
+
+    render();
+  })();
+</script>
+
+</body>
+</html>
